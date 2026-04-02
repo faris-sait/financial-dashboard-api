@@ -76,29 +76,15 @@ After importing, select the local environment and run `Login Admin` or `Login Vi
 pytest
 ```
 
-## Role-By-Role Newman Automation
+## Role-By-Role Postman Testing
 
-Run API checks one role at a time:
+Use the `finance-dashboard-role-tests` collection folders:
 
-- PowerShell: `.\scripts\newman-role-tests.ps1 admin`
-- PowerShell: `.\scripts\newman-role-tests.ps1 analyst`
-- PowerShell: `.\scripts\newman-role-tests.ps1 viewer`
-- PowerShell: `.\scripts\newman-role-tests.ps1 all`
+- `Role - Admin`
+- `Role - Analyst`
+- `Role - Viewer`
 
-CMD equivalents:
-
-- `scripts\newman-role-tests.bat admin`
-- `scripts\newman-role-tests.bat analyst`
-- `scripts\newman-role-tests.bat viewer`
-- `scripts\newman-role-tests.bat all`
-
-Direct Newman commands (if you prefer without scripts):
-
-```bash
-npx newman run postman/finance-dashboard-role-tests.postman_collection.json -e postman/finance-dashboard-local.postman_environment.json --folder "Role - Admin"
-npx newman run postman/finance-dashboard-role-tests.postman_collection.json -e postman/finance-dashboard-local.postman_environment.json --folder "Role - Analyst"
-npx newman run postman/finance-dashboard-role-tests.postman_collection.json -e postman/finance-dashboard-local.postman_environment.json --folder "Role - Viewer"
-```
+Run each folder separately in Postman to test permissions role by role.
 
 ## API Overview
 
