@@ -76,6 +76,36 @@ After importing, select the local environment and run `Login Admin` or `Login Vi
 pytest
 ```
 
+## Docker Deployment
+
+Build and run with Docker:
+
+```bash
+docker build -t fincial-dashboard-api:latest .
+docker run -d --name fincial-dashboard-api -p 8000:8000 --env-file .env fincial-dashboard-api:latest
+```
+
+Or run with Docker Compose:
+
+```bash
+docker compose up --build -d
+```
+
+Open [http://localhost:8000/docs](http://localhost:8000/docs) after the container starts.
+
+## Make It Publicly Accessible
+
+Option 1 (production): deploy this Dockerized app to a public cloud service like Railway, Render, Fly.io, AWS, or a VPS.  
+Option 2 (quick demo): run locally and expose it using a tunnel tool like `cloudflared` or `ngrok`.
+
+Quick tunnel example with Cloudflare:
+
+```bash
+cloudflared tunnel --url http://localhost:8000
+```
+
+It gives a public HTTPS URL you can share for testing.
+
 ## Role-By-Role Postman Testing
 
 Use the `finance-dashboard-role-tests` collection folders:

@@ -1,0 +1,11 @@
+.git
+.github
+.pytest_cache
+.tools
+.venv
+venv
+__pycache__
+*.py[cod]
+tests
+postman
+.env
