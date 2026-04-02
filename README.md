@@ -42,7 +42,7 @@ tests/            # auth and transaction flow tests
 Copy `.env.example` to `.env` and update the values:
 
 ```env
-DATABASE_URL=postgresql+psycopg://postgres:password@db.your-project.supabase.co:5432/postgres
+DATABASE_URL=postgresql+psycopg://postgres:yourpassword@db.your-project.supabase.co:5432/postgres
 JWT_SECRET=replace-with-a-long-random-secret
 JWT_EXPIRE_MINUTES=60
 ADMIN_EMAIL=admin@example.com
