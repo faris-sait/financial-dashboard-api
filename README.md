@@ -85,6 +85,17 @@ docker build -t fincial-dashboard-api:latest .
 docker run -d --name fincial-dashboard-api -p 8000:8000 --env-file .env fincial-dashboard-api:latest
 ```
 
+Published Docker image:
+
+`docker.io/farissait7/financial-dashboard-api:latest`
+
+Pull and run the published image:
+
+```bash
+docker pull farissait7/financial-dashboard-api:latest
+docker run -d --name fincial-dashboard-api -p 8000:8000 --env-file .env farissait7/financial-dashboard-api:latest
+```
+
 Or run with Docker Compose:
 
 ```bash
