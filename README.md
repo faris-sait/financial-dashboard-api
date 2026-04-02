@@ -88,6 +88,7 @@ docker run -d --name fincial-dashboard-api -p 8000:8000 --env-file .env fincial-
 Published Docker image:
 
 `docker.io/farissait7/financial-dashboard-api:latest`
+`farissait7/financial-dashboard-api:latest`
 
 Pull and run the published image:
 
@@ -103,6 +104,12 @@ docker compose up --build -d
 ```
 
 Open [http://localhost:8000/docs](http://localhost:8000/docs) after the container starts.
+
+## Live Deployment
+
+Railway URL:
+
+`https://financial-dashboard-api-production-e7e7.up.railway.app`
 
 ## Make It Publicly Accessible
 
