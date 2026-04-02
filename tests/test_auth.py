@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from app.core.config import clear_settings_cache
+from app.dependencies.rate_limit import clear_rate_limit_store
 from tests.conftest import get_auth_header
 
 
@@ -65,3 +67,35 @@ def test_authentication_flow(client):
     dashboard_response = client.get("/dashboard/summary", headers=viewer_headers)
     assert dashboard_response.status_code == 200
     assert dashboard_response.json()["data"]["net_balance"] == 0.0
+
+
+def test_login_rate_limit_returns_429(client, monkeypatch):
+    monkeypatch.setenv("AUTH_RATE_LIMIT_REQUESTS", "2")
+    monkeypatch.setenv("AUTH_RATE_LIMIT_WINDOW_SECONDS", "60")
+    clear_settings_cache()
+    clear_rate_limit_store()
+
+    register_response = client.post(
+        "/auth/register",
+        json={"email": "limited@example.com", "password": "LimitedPass123"},
+    )
+    assert register_response.status_code == 201
+
+    first_login = client.post(
+        "/auth/login",
+        json={"email": "limited@example.com", "password": "LimitedPass123"},
+    )
+    assert first_login.status_code == 200
+
+    second_login = client.post(
+        "/auth/login",
+        json={"email": "limited@example.com", "password": "LimitedPass123"},
+    )
+    assert second_login.status_code == 200
+
+    third_login = client.post(
+        "/auth/login",
+        json={"email": "limited@example.com", "password": "LimitedPass123"},
+    )
+    assert third_login.status_code == 429
+    assert third_login.json()["error"] == "Too many requests. Please try again later."

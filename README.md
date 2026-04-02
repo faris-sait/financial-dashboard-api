@@ -19,6 +19,7 @@ A clean FastAPI backend for a finance dashboard application with JWT authenticat
 - Filtering, search, and pagination for transaction listings
 - User-scoped dashboard summary, category totals, trends, and recent transactions
 - Standardized success responses: `{ "success": true, "data": ... }`
+- Basic auth rate limiting for `/auth/register` and `/auth/login`
 - Swagger docs at `/docs`
 - Minimal automated tests for auth and transaction flows
 
@@ -45,6 +46,8 @@ Copy `.env.example` to `.env` and update the values:
 DATABASE_URL=postgresql+psycopg://postgres:yourpassword@db.your-project.supabase.co:5432/postgres
 JWT_SECRET=replace-with-a-long-random-secret
 JWT_EXPIRE_MINUTES=60
+AUTH_RATE_LIMIT_REQUESTS=5
+AUTH_RATE_LIMIT_WINDOW_SECONDS=60
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=AdminPass123
 ```
@@ -140,6 +143,11 @@ Run each folder separately in Postman to test permissions role by role.
 
 - `POST /auth/register`
 - `POST /auth/login`
+
+Both auth endpoints are rate-limited per client IP using:
+
+- `AUTH_RATE_LIMIT_REQUESTS` (default `5`)
+- `AUTH_RATE_LIMIT_WINDOW_SECONDS` (default `60`)
 
 ### Users
 

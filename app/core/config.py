@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     database_url: str = Field(..., validation_alias="DATABASE_URL")
     jwt_secret: str = Field(..., validation_alias="JWT_SECRET")
     jwt_expire_minutes: int = Field(60, validation_alias="JWT_EXPIRE_MINUTES")
+    auth_rate_limit_requests: int = Field(5, validation_alias="AUTH_RATE_LIMIT_REQUESTS")
+    auth_rate_limit_window_seconds: int = Field(60, validation_alias="AUTH_RATE_LIMIT_WINDOW_SECONDS")
     admin_email: EmailStr = Field(..., validation_alias="ADMIN_EMAIL")
     admin_password: str = Field(..., validation_alias="ADMIN_PASSWORD")
     docs_url: str = "/docs"
@@ -36,6 +38,13 @@ class Settings(BaseSettings):
     def validate_expiration(cls, value: int) -> int:
         if value <= 0:
             raise ValueError("JWT_EXPIRE_MINUTES must be greater than 0.")
+        return value
+
+    @field_validator("auth_rate_limit_requests", "auth_rate_limit_window_seconds")
+    @classmethod
+    def validate_rate_limit_values(cls, value: int) -> int:
+        if value <= 0:
+            raise ValueError("Rate limit settings must be greater than 0.")
         return value
 
     @field_validator("admin_password")
